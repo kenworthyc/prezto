@@ -38,7 +38,7 @@ version is 4.3.11.
      `source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"` to the bottom of your
      `.zshrc` and keep the rest of your Zsh configuration intact. For more
      complicated setups, it is recommended that you back up your original
-     configs and replace them with the provided prezto runcoms.
+    configs and replace them with the provided prezto runcoms.
 
   4. Set Zsh as your default shell:
 
