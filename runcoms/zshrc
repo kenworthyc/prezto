@@ -48,7 +48,6 @@ compctl -g '~/.itermocil/*(:t:r)' itermocil
 # Rbenv autocomplete and shims
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-
 # Use updated Vim (via MacVim (instead of preinstalled Vim 7.3))
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
@@ -77,80 +76,6 @@ alias shup="source ~/.zshrc"
 alias zshrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 
-stage() {
-  targetdir="$HOME/Code/mealhand"
-  if [ "$(pwd)" != $targetdir ]; then
-    cd $targetdir;
-  fi
-
-  normal=`echo "\033[m"`
-  blue=`echo "\033[36m"`
-  yellow=`echo "\033[33m"`
-  bgred=`echo "\033[41m"`
-  fgred=`echo "\033[31m"`
-
-  safe_envs=("demo" "dev" "dev2" "staging")
-  branch="$(git symbolic-ref --short HEAD)"
-
-  if [ ${safe_envs[(ie)$1]} -le ${#safe_envs} ]
-  then
-    echo "Stage branch ${yellow}$branch${normal} in ${blue}$1${normal}, y/n?"
-    arg_given="true"
-  else
-    arg_given="false"
-  fi
-
-  if [ $arg_given = "false" ]
-  then
-    echo "Choose an env to deploy ${yellow}$branch${normal} to."
-
-    printf "\n************************************\n"
-    printf "${blue}**${yellow} 1)${blue} demo${normal}\n"
-    printf "${blue}**${yellow} 2)${blue} dev${normal}\n"
-    printf "${blue}**${yellow} 3)${blue} dev2${normal}\n"
-    printf "${blue}**${yellow} 4)${blue} staging${normal}\n"
-    printf "************************************\n"
-    printf "Choose an env or ${fgred}X to exit. ${normal}"
-  else
-    arg_opt=$1
-  fi
-
-  read opt
-  while [[ !arg_opt && $opt != '' ]]
-    do
-    if [ $opt = '' ]; then
-      break;
-    else
-      case $opt in
-        1|"demo" )
-          git push demo ${branch}:master -f
-          break;
-        ;;
-        2|"dev" )
-          git push dev ${branch}:master -f
-          break;
-        ;;
-        3|"dev2" )
-          git push dev2 ${branch}:master -f
-          break;
-        ;;
-        4|"staging" )
-          git push staging ${branch}:master -f
-          break;
-        ;;
-        [Yy])
-          git push $arg_opt ${branch}:master -f
-          break;
-        ;;
-        [Nnx])break;
-        ;;
-        \n)break;
-        ;;
-      esac
-    fi
-  done
-}
-
 vimbundle() {
   cd ~/.vim/bundle
 
@@ -169,11 +94,5 @@ vimbundle() {
   cd ~
   echo "Vim plugins have been updated."
 }
-
-alias git="hub"
-
-alias pr="hub pull-request"
-
-eval "$(hub alias -s)"
 
 
